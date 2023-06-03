@@ -45,17 +45,24 @@ class BingoViewController: UIViewController {
     
     @IBAction func resetButton(_ sender: Any) {
         
+        randomNumber?.randomNumbers = Array(1...75) // Reset the array to its initial state
+            labelView.text = "最初から！"
+        
+        print("リセットしました！")
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
         if segue.identifier == "checkNum" {
-            
+
             if let checkNumVC = segue.destination as? CheckNumberViewController {
-                
+
                 if let randomNumber = randomNumber {
-                    
-                    checkNumVC.checkValue.append(String(randomNumber.randomNum))
+
+                    checkNumVC.checkValue = [String(randomNumber.randomNum)]
+
+                    print("値を渡しました")
                 }
             }
         }

@@ -72,7 +72,7 @@
                                     <action selector="resetButton:" destination="D5T-eb-tuJ" eventType="touchUpInside" id="9ax-RU-AwP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYv-Bt-GDR">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYv-Bt-GDR" colorLabel="IBBuiltInLabel-Gray">
                                 <rect key="frame" x="100" y="313" width="80.333333333333314" height="35"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -139,8 +139,8 @@
                                     <segue destination="D5T-eb-tuJ" kind="show" identifier="backButton" id="neR-64-8EV"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yrd-1k-5fX">
-                                <rect key="frame" x="0.0" y="42" width="852" height="343"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yrd-1k-5fX">
+                                <rect key="frame" x="0.0" y="50" width="852" height="343"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="I1p-di-Fvx">
                                     <size key="itemSize" width="128" height="128"/>
@@ -149,7 +149,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="B8h-Wq-5tf">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="viewCell" id="B8h-Wq-5tf" customClass="CustomCell">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bS0-IH-7kA">
@@ -169,12 +169,17 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="bxI-uV-YPE" id="NPt-4t-PnD"/>
+                                    <outlet property="delegate" destination="bxI-uV-YPE" id="VYd-LS-c60"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kRI-G3-8pO"/>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
                             <constraint firstItem="kRI-G3-8pO" firstAttribute="trailing" secondItem="yrd-1k-5fX" secondAttribute="trailing" id="JsS-y9-sJp"/>
+                            <constraint firstItem="kRI-G3-8pO" firstAttribute="bottom" secondItem="yrd-1k-5fX" secondAttribute="bottom" id="Zmf-2U-8qe"/>
                             <constraint firstItem="yrd-1k-5fX" firstAttribute="leading" secondItem="kRI-G3-8pO" secondAttribute="leading" id="og9-iW-2tp"/>
                             <constraint firstItem="yrd-1k-5fX" firstAttribute="top" secondItem="kRI-G3-8pO" secondAttribute="top" constant="50" id="pqu-KR-aF3"/>
                             <constraint firstItem="kRI-G3-8pO" firstAttribute="bottom" secondItem="yrd-1k-5fX" secondAttribute="bottom" id="yFJ-kn-8bM"/>

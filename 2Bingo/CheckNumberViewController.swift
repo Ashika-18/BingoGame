@@ -1,17 +1,10 @@
-//
-//  CheckNumberViewController.swift
-//  2Bingo
-//
-//  Created by Kazuhiro Ashiba on 2023/05/30.
-//
-
 import UIKit
 
-class CheckNumberViewController: UIViewController, UICollectionViewDataSource {
+class CheckNumberViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     class CustomCell: UICollectionViewCell {
-        @IBOutlet weak var textLabel: UILabel!
         
+        @IBOutlet weak var textLabel: UILabel!
     }
 
     
@@ -23,7 +16,7 @@ class CheckNumberViewController: UIViewController, UICollectionViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView.dataSource = self
+        collectionView?.dataSource = self
         
         print("\(checkValue)")
         
@@ -35,7 +28,7 @@ class CheckNumberViewController: UIViewController, UICollectionViewDataSource {
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewCell", for: indexPath) as! CustomCell
             
             let value = checkValue[indexPath.item]
             
