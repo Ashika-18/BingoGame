@@ -1,7 +1,8 @@
-
 import UIKit
 
 class BingoViewController: UIViewController {
+    
+    var isTapGestureEnabled = true
     
     @IBOutlet weak var labelView: UILabel!
         
@@ -10,6 +11,7 @@ class BingoViewController: UIViewController {
         super.viewDidLoad()
         
             randomNumber = RandomNumber()
+        
     }
     
     //ランダムに値を取り出し削除する構造体
@@ -31,17 +33,27 @@ class BingoViewController: UIViewController {
 
     @IBAction func tapAction(_ sender: Any) {
 
-        randomNumber = RandomNumber()  // タップ時に構造体のインスタンスを更新
-                
-                // ラベルに新しいランダムな値を表示する
-                labelView.text = "\(randomNumber?.randomNum ?? 0)"
+        guard isTapGestureEnabled else {
+                return
+            }
+            
+            randomNumber = RandomNumber()
+        
+            labelView.text = "\(randomNumber?.randomNum ?? 0)"
+        
     }
-    
     
     @IBAction func checkButton(_ sender: Any) {
         
-        performSegue(withIdentifier: "checkNum", sender: nil)
+        guard isTapGestureEnabled else {
+                return
+            }
+            
+            isTapGestureEnabled = false
+        
+        print("タップは無効です")
     }
+    
     
     @IBAction func resetButton(_ sender: Any) {
         
@@ -61,13 +73,9 @@ class BingoViewController: UIViewController {
                 if let randomNumber = randomNumber {
 
                     checkNumVC.checkValue = [String(randomNumber.randomNum)]
-
-                    print("値を渡しました")
                 }
             }
         }
     }
-
-    
-//classの底
+//
 }
