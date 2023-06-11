@@ -49,6 +49,9 @@
                             <constraint firstItem="iMy-lg-0Nn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="yWp-TF-RNx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="startButton" destination="G63-x5-Wqg" id="tSd-IL-lPQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -109,7 +112,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="tgI-vs-oK9"/>
                     <connections>
+                        <outlet property="checkButton" destination="hYv-Bt-GDR" id="zzM-ck-TMc"/>
                         <outlet property="labelView" destination="q74-zp-r0i" id="q3j-76-pNG"/>
+                        <outlet property="resetButton" destination="usk-l3-aqC" id="gRw-iX-6Kd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hoh-ML-JX5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -148,28 +153,20 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NumberCell" id="Nka-Q5-yyb">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="viewCell" id="Nka-Q5-yyb">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c9z-yh-KXg">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNe-Hf-pfE">
-                                                    <rect key="frame" x="43" y="54" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </collectionViewCellContentView>
-                                        <connections>
-                                            <outlet property="viewCell" destination="pNe-Hf-pfE" id="0qb-HL-akZ"/>
-                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="bxI-uV-YPE" id="Ymj-SL-O4D"/>
+                                    <outlet property="delegate" destination="bxI-uV-YPE" id="I2Z-90-R2H"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kRI-G3-8pO"/>
@@ -185,6 +182,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="IRw-sC-5Ea"/>
                     <connections>
+                        <outlet property="backButton" destination="dRK-1W-aQl" id="MBl-ic-Jbc"/>
                         <outlet property="collectionView" destination="x5h-ay-O9s" id="zNn-TO-IFR"/>
                     </connections>
                 </viewController>
@@ -194,8 +192,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rn9-L5-hhd"/>
-        <segue reference="neR-64-8EV"/>
+        <segue reference="Xr9-5J-qPQ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

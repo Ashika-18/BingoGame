@@ -1,62 +1,48 @@
 import UIKit
 
-class CheckNumberViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
+class CheckNumberViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var backButton: UIButton!
+    
+    //画面遷移後の値を保持する変数
+    var receivedRandomNumber: BingoViewController.RandomNumber?
     
     var checkValue: [String] = []
     
+    var randomNums = Array(1...75)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        backButton.layer.cornerRadius = 10.0
         
-        print("\(checkValue)")
-        
+        collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
     }
-    
+}
+
+extension CheckNumberViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return checkValue.count
+                
+        return randomNums.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NumberCell", for: indexPath) as! NumberCell
         
-        if cell.numberLabel == nil {
-            
-            cell.numberLabel = UILabel()
-            
-            cell.contentView.addSubview(cell.numberLabel)
-            // 必要に応じて、numberLabelの制約を設定するなど、セル内でのレイアウトを調整します
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CollectionViewCell
+        
+        let number = randomNums[indexPath.item]
+            cell.label.text = "\(number)"
+        
+        if checkValue.contains("\(number)") {
+            cell.backgroundColor = UIColor.blue
+        } else {
+            cell.backgroundColor = UIColor.white
         }
-        
-        cell.numberLabel.text = checkValue[indexPath.item]
         
         return cell
     }
-
-    class NumberCell: UICollectionViewCell {
-        
-        @IBOutlet var numberLabel: UILabel!
-        
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            configureNumberLabel()
-        }
-        
-        required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
-            configureNumberLabel()
-        }
-        
-        private func configureNumberLabel() {
-            numberLabel = UILabel(frame: contentView.bounds)
-            numberLabel.textAlignment = .center
-            contentView.addSubview(numberLabel)
-        }
-    }
-
 }
+
+
