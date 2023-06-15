@@ -32,7 +32,7 @@ class BingoViewController: UIViewController {
         init() {
             randomNumbers = Array(1...75)
             
-            randomNum = randomNumbers.remove(at: Int.random(in: 1..<randomNumbers.count))
+            randomNum = randomNumbers.remove(at: Int.random(in: 0..<randomNumbers.count))
         }
     }
 
