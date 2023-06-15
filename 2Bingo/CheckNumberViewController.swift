@@ -43,6 +43,17 @@ extension CheckNumberViewController: UICollectionViewDataSource, UICollectionVie
         
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "backButton" {
+            
+            if let bingoVC = segue.destination as? BingoViewController {
+                
+                bingoVC.randomValues = checkValue.compactMap{ Int($0) }
+            }
+        }
+    }
 }
 
 
