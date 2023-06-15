@@ -1,5 +1,5 @@
 import UIKit
-
+//これが残る
 class BingoViewController: UIViewController {
     
     
