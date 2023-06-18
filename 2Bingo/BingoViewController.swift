@@ -9,6 +9,12 @@ class BingoViewController: UIViewController {
     
     @IBOutlet weak var resetButton: UIButton!
     
+    var currentIndex = 0
+    
+    var timer: Timer?
+
+    var slideShowActive = false
+
     var shouldGenerateValues = true
 
     var randomValues = [Int]()
@@ -22,6 +28,20 @@ class BingoViewController: UIViewController {
         
         resetButton.layer.cornerRadius = 10.0
     }
+    
+    //start
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateSlide), userInfo: nil, repeats: true)
+        randomGenerater() // 最初のタイマー開始時に値を表示
+    }
+    
+    //stop
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+        slideShowActive = false // タイマー停止時にスライドショーを無効化
+    }
+
     
     func resetFlag() {
         shouldGenerateValues = true
@@ -53,7 +73,6 @@ class BingoViewController: UIViewController {
             
         }
     }
-    
     
     @IBAction func tapAction(_ sender: Any) {
         
@@ -89,6 +108,19 @@ class BingoViewController: UIViewController {
         print("リセットしました！")
         
     }
+    
+    @objc func updateSlide() {
+        currentIndex += 1
+        if currentIndex >= randomNumbers.count {
+            stopTimer()
+            labelView.text = "終了！"
+            shouldGenerateValues = false
+        } else {
+            let currentValue = randomNumbers[currentIndex]
+            labelView.text = "\(currentValue)"
+        }
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
