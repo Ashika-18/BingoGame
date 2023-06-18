@@ -6,16 +6,14 @@ class CheckNumberViewController: UIViewController {
     
     @IBOutlet weak var backButton: UIButton!
     
-    //画面遷移後の値を保持する変数
-    var receivedRandomNumber: BingoViewController.RandomNumber?
-    
+
     var checkValue: [String] = []
     
     var randomNums = Array(1...75)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         backButton.layer.cornerRadius = 10.0
         
         collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
@@ -44,6 +42,8 @@ extension CheckNumberViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
     
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "backButton" {
@@ -55,5 +55,3 @@ extension CheckNumberViewController: UICollectionViewDataSource, UICollectionVie
         }
     }
 }
-//ギットのテスト
-

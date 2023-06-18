@@ -9,7 +9,10 @@ class BingoViewController: UIViewController {
     
     @IBOutlet weak var resetButton: UIButton!
     
+    
     var randomValues = [Int]()
+    
+    var randomNumbers = Array(1...10)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,37 +21,42 @@ class BingoViewController: UIViewController {
         
         resetButton.layer.cornerRadius = 10.0
         
-            randomNumber = RandomNumber()
         
     }
     
-    //ランダムに値を取り出し削除する構造体
-    struct RandomNumber {
+    //ランダムに値を生成する
+    func randomGenerater() {
         
-        var randomNumbers: [Int]
-        
-        var randomNum: Int
-        
-        init() {
-            randomNumbers = Array(1...75)
+        if randomNumbers.isEmpty {
             
-            randomNum = randomNumbers.remove(at: Int.random(in: 0..<randomNumbers.count))
+            labelView.text = "終了！"
+                        
+        } else {
+            let randomIndex = Int.random(in: 0..<randomNumbers.count)
+            
+            let randomValue = randomNumbers[randomIndex]
+            
+            randomNumbers.remove(at: randomIndex)
+            
+            randomValues.append(randomValue)
+            
+            print("\(randomValues)を渡しました")
+            
+            labelView.text = "\(randomValue)"
+            
         }
     }
-
-    var randomNumber: RandomNumber?
-
-
+    
+    
     @IBAction func tapAction(_ sender: Any) {
         
-            randomNumber = RandomNumber()
-        
-            labelView.text = "\(randomNumber?.randomNum ?? 0)"
-        
-        randomValues.append(randomNumber!.randomNum)
-        
-        print("\(randomValues)を渡しました")
-        
+        if !randomNumbers.isEmpty {
+               randomGenerater()
+               print("\(randomNumbers.count)")
+        } else {
+            
+            labelView.text = "終了！"
+        }
     }
     
     @IBAction func checkButton(_ sender: Any) {
@@ -59,8 +67,10 @@ class BingoViewController: UIViewController {
     
     @IBAction func resetButton(_ sender: Any) {
         
-        randomNumber?.randomNumbers = Array(1...75)
+            randomValues = []
         
+            randomNumbers = Array(1...10)
+            
             labelView.text = "最初から！"
         
         print("リセットしました！")
@@ -75,17 +85,10 @@ class BingoViewController: UIViewController {
             //遷移先のViewContorollerのインスタンス化
             if let checkNumVC = segue.destination as? CheckNumberViewController {
                 
-                //遷移先の変数に値を代入する
-                if let randomNumber = randomNumber {
-                    
                     checkNumVC.checkValue = randomValues.map { String($0) }
-                    
-                    checkNumVC.receivedRandomNumber = randomNumber
-
-                   
+                
                 }
             }
         }
-    }
 //
 }
