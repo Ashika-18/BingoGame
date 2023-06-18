@@ -80,7 +80,7 @@ class BingoViewController: UIViewController {
         
             randomValues = []
         
-            randomNumbers = Array(1...10)
+            randomNumbers = Array(1...75)
         
             resetFlag()
         
