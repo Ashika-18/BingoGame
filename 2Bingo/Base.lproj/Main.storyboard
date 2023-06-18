@@ -134,15 +134,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRK-1W-aQl">
-                                <rect key="frame" x="84" y="23" width="68" height="35"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <buttonConfiguration key="configuration" style="plain" title="BACK"/>
-                                <connections>
-                                    <segue destination="D5T-eb-tuJ" kind="show" identifier="backButton" id="neR-64-8EV"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="x5h-ay-O9s">
                                 <rect key="frame" x="0.0" y="66" width="852" height="326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -168,21 +159,31 @@
                                     <outlet property="delegate" destination="bxI-uV-YPE" id="I2Z-90-R2H"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oM-3V-4xK">
+                                <rect key="frame" x="51" y="20" width="68" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="BACK"/>
+                                <connections>
+                                    <action selector="backButton:" destination="bxI-uV-YPE" eventType="touchUpInside" id="VQk-Tx-cHm"/>
+                                    <segue destination="D5T-eb-tuJ" kind="show" identifier="backButton" id="Y4j-Or-YLE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kRI-G3-8pO"/>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
                             <constraint firstItem="kRI-G3-8pO" firstAttribute="trailing" secondItem="x5h-ay-O9s" secondAttribute="trailing" id="3Vx-Ej-NkO"/>
                             <constraint firstItem="x5h-ay-O9s" firstAttribute="leading" secondItem="kRI-G3-8pO" secondAttribute="leading" id="60G-eC-cDR"/>
-                            <constraint firstItem="dRK-1W-aQl" firstAttribute="leading" secondItem="kRI-G3-8pO" secondAttribute="leading" constant="84" id="7k2-ci-EjK"/>
                             <constraint firstItem="x5h-ay-O9s" firstAttribute="top" secondItem="kRI-G3-8pO" secondAttribute="top" constant="100" id="FoQ-Ah-C5q"/>
-                            <constraint firstItem="x5h-ay-O9s" firstAttribute="top" secondItem="dRK-1W-aQl" secondAttribute="bottom" constant="42" id="cne-UZ-ADy"/>
                             <constraint firstItem="kRI-G3-8pO" firstAttribute="bottom" secondItem="x5h-ay-O9s" secondAttribute="bottom" constant="1" id="eKP-bh-VYw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="IRw-sC-5Ea"/>
                     <connections>
-                        <outlet property="backButton" destination="dRK-1W-aQl" id="MBl-ic-Jbc"/>
+                        <outlet property="backButton" destination="3oM-3V-4xK" id="S4I-n7-kvK"/>
                         <outlet property="collectionView" destination="x5h-ay-O9s" id="zNn-TO-IFR"/>
                     </connections>
                 </viewController>
@@ -192,7 +193,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="neR-64-8EV"/>
+        <segue reference="Y4j-Or-YLE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
@@ -203,6 +204,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

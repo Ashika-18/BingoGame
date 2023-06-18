@@ -1,5 +1,5 @@
 import UIKit
-//これが残る
+
 class BingoViewController: UIViewController {
     
     
@@ -9,10 +9,11 @@ class BingoViewController: UIViewController {
     
     @IBOutlet weak var resetButton: UIButton!
     
-    
+    var shouldGenerateValues = true
+
     var randomValues = [Int]()
     
-    var randomNumbers = Array(1...10)
+    var randomNumbers = Array(1...75)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +21,18 @@ class BingoViewController: UIViewController {
         checkButton.layer.cornerRadius = 10.0
         
         resetButton.layer.cornerRadius = 10.0
-        
-        
     }
     
+    func resetFlag() {
+        shouldGenerateValues = true
+    }
+
     //ランダムに値を生成する
     func randomGenerater() {
+        
+        if !shouldGenerateValues {
+                return
+            }
         
         if randomNumbers.isEmpty {
             
@@ -50,13 +57,17 @@ class BingoViewController: UIViewController {
     
     @IBAction func tapAction(_ sender: Any) {
         
-        if !randomNumbers.isEmpty {
-               randomGenerater()
-               print("\(randomNumbers.count)")
-        } else {
+        if shouldGenerateValues && !randomNumbers.isEmpty {
             
-            labelView.text = "終了！"
-        }
+                randomGenerater()
+            
+                print("残り\(randomNumbers.count)です!")
+            
+            } else {
+                labelView.text = "終了！"
+                
+                shouldGenerateValues = false
+            }
     }
     
     @IBAction func checkButton(_ sender: Any) {
@@ -70,7 +81,9 @@ class BingoViewController: UIViewController {
             randomValues = []
         
             randomNumbers = Array(1...10)
-            
+        
+            resetFlag()
+        
             labelView.text = "最初から！"
         
         print("リセットしました！")
