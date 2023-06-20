@@ -1,5 +1,7 @@
 import UIKit
 
+import AVFoundation
+
 class BingoViewController: UIViewController {
     
     
@@ -8,6 +10,17 @@ class BingoViewController: UIViewController {
     @IBOutlet weak var checkButton: UIButton!
     
     @IBOutlet weak var resetButton: UIButton!
+    
+    //シンバルの音
+    var symbalPath = Bundle.main.url(forResource: "シンバル", withExtension: "mp3")
+    
+    //ドラムの音
+    var drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")
+
+    //ドラム再生用のインスタンス
+    var musicPlayer: AVAudioPlayer?
+    
+    var timerNum = Array(1...99)
     
     var currentIndex = 0
     
@@ -30,25 +43,31 @@ class BingoViewController: UIViewController {
     }
     
     //start
-    func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateSlide), userInfo: nil, repeats: true)
-        randomGenerater() // 最初のタイマー開始時に値を表示
+    func startSlideShow() {
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateSlide), userInfo: nil, repeats: true)
+        
+        currentIndex = 0 // Reset the currentIndex
+        
+        updateSlide() // Display initial value
     }
     
     //stop
-    func stopTimer() {
+    func stopSlideShow() {
+        
         timer?.invalidate()
+        
         timer = nil
-        slideShowActive = false // タイマー停止時にスライドショーを無効化
+        
+        slideShowActive = false
     }
 
-    
     func resetFlag() {
+        
         shouldGenerateValues = true
     }
 
     //ランダムに値を生成する
-    func randomGenerater() {
+    func randomGenerator() {
         
         if !shouldGenerateValues {
                 return
@@ -67,25 +86,64 @@ class BingoViewController: UIViewController {
             
             randomValues.append(randomValue)
             
-            print("\(randomValues)を渡しました")
+            print("残り\(randomNumbers.count)です！")
             
             labelView.text = "\(randomValue)"
             
         }
     }
     
+    func playSound(player: inout AVAudioPlayer?, path: URL, count: Int) {
+        
+        guard player == nil else {
+            
+            return
+        }
+        do {
+            
+            player = try AVAudioPlayer(contentsOf: path)
+            
+            player?.numberOfLoops = count
+            
+            player?.play()
+            
+        } catch {
+            
+            print("再生中にエラーが発生しました！")
+        }
+    }
+
+    
     @IBAction func tapAction(_ sender: Any) {
         
-        if shouldGenerateValues && !randomNumbers.isEmpty {
+        if !slideShowActive {
+
+            var drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")!
             
-                randomGenerater()
+            playSound(player: &musicPlayer, path: drumPath, count: 1) //ドラムの音を1回再生する
             
-                print("残り\(randomNumbers.count)です!")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.slideShowActive = true
+                self.startSlideShow()
+            }
+                slideShowActive = true
+
+                startSlideShow()
             
-            } else {
-                labelView.text = "終了！"
+            
+
+            } else if shouldGenerateValues && !randomNumbers.isEmpty {
+
+                randomGenerator()
                 
-                shouldGenerateValues = false
+                stopSlideShow()
+                
+                var symbalPath = Bundle.main.url(forResource: "シンバル", withExtension: "mp3")!
+                
+                playSound(player: &musicPlayer, path: symbalPath, count: 1) // シンバルの音を1回再生する
+                
+                labelView.text = "\(randomValues.last ?? 0)"
+                    
             }
     }
     
@@ -111,14 +169,13 @@ class BingoViewController: UIViewController {
     
     @objc func updateSlide() {
         currentIndex += 1
-        if currentIndex >= randomNumbers.count {
-            stopTimer()
-            labelView.text = "終了！"
-            shouldGenerateValues = false
-        } else {
-            let currentValue = randomNumbers[currentIndex]
-            labelView.text = "\(currentValue)"
+        
+        if currentIndex >= timerNum.count {
+            currentIndex = 0 // Reset the currentIndex to start over
         }
+        
+        let currentValue = timerNum[currentIndex]
+        labelView.text = "\(currentValue)"
     }
 
     
