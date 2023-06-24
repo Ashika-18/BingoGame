@@ -48,6 +48,8 @@ class BingoViewController: UIViewController {
     //stop
     func stopSlideShow() {
         
+        musicPlayer = nil
+        
         timer?.invalidate()
         
         timer = nil
@@ -130,7 +132,7 @@ class BingoViewController: UIViewController {
             //ドラムの音
             let drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")!
             
-            playSound(player: &musicPlayer, path: drumPath, count: 1, startTime: 0.0, duration: 2.0) //ドラムの音を1回再生する
+            playSound(player: &musicPlayer, path: drumPath, count: -1, startTime: 0.0, duration: 2.0) //ドラムの音を1回再生する
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 
