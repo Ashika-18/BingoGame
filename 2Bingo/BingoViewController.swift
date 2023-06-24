@@ -11,13 +11,7 @@ class BingoViewController: UIViewController {
     
     @IBOutlet weak var resetButton: UIButton!
     
-    //シンバルの音
-    var symbalPath = Bundle.main.url(forResource: "シンバル", withExtension: "mp3")
-    
-    //ドラムの音
-    var drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")
-
-    //ドラム再生用のインスタンス
+    //音楽ファイル再生用のインスタンス
     var musicPlayer: AVAudioPlayer?
     
     var timerNum = Array(1...99)
@@ -89,11 +83,10 @@ class BingoViewController: UIViewController {
             print("残り\(randomNumbers.count)です！")
             
             labelView.text = "\(randomValue)"
-            
         }
     }
     
-    func playSound(player: inout AVAudioPlayer?, path: URL, count: Int) {
+    func playSound(player: inout AVAudioPlayer?, path: URL, count: Int, startTime: TimeInterval, duration: TimeInterval, completion: (() -> Void)? = nil) {
         
         guard player == nil else {
             
@@ -101,11 +94,27 @@ class BingoViewController: UIViewController {
         }
         do {
             
-            player = try AVAudioPlayer(contentsOf: path)
+            let audioPlayer = try AVAudioPlayer(contentsOf: path)
             
-            player?.numberOfLoops = count
+                audioPlayer.numberOfLoops = count
+    
+                //再生開始位置
+                audioPlayer.currentTime = startTime
+    
+                audioPlayer.enableRate = true
+    
+                audioPlayer.rate = 1.0
+    
+                audioPlayer.play()
             
-            player?.play()
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+
+                audioPlayer.stop()
+
+                completion?()
+            }
+            
+            player = audioPlayer
             
         } catch {
             
@@ -117,33 +126,31 @@ class BingoViewController: UIViewController {
     @IBAction func tapAction(_ sender: Any) {
         
         if !slideShowActive {
-
-            var drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")!
             
-            playSound(player: &musicPlayer, path: drumPath, count: 1) //ドラムの音を1回再生する
+            //ドラムの音
+            let drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")!
+            
+            playSound(player: &musicPlayer, path: drumPath, count: 1, startTime: 0.0, duration: 2.0) //ドラムの音を1回再生する
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                
                 self.slideShowActive = true
+                
                 self.startSlideShow()
             }
-                slideShowActive = true
-
-                startSlideShow()
-            
-            
-
+               
             } else if shouldGenerateValues && !randomNumbers.isEmpty {
 
+                //シンバルの音
+                let symbalPath = Bundle.main.url(forResource: "シンバル", withExtension: "mp3")!
+                
                 randomGenerator()
                 
                 stopSlideShow()
                 
-                var symbalPath = Bundle.main.url(forResource: "シンバル", withExtension: "mp3")!
-                
-                playSound(player: &musicPlayer, path: symbalPath, count: 1) // シンバルの音を1回再生する
+                playSound(player: &musicPlayer, path: symbalPath, count: 1, startTime: 0, duration: 3.0)
                 
                 labelView.text = "\(randomValues.last ?? 0)"
-                    
             }
     }
     
