@@ -11,6 +11,9 @@ class BingoViewController: UIViewController {
     
     @IBOutlet weak var resetButton: UIButton!
     
+    //ドラムのフラグ
+    var drumRollActive = false
+    
     //ドラムロール用のインスタンス
     var drumPlay: AVAudioPlayer?
     
@@ -98,12 +101,13 @@ class BingoViewController: UIViewController {
         
         if let drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3") {
             
-            playSound(player: &drumPlay, path: drumPath, count: -1, startTime: 0.5, duration: 2.2)
+            playSound(player: &drumPlay, path: drumPath, count: drumRollActive ? -1 : 0, startTime: 0.5, duration: 8)
         } else {
             
             print("ドラムロールの音楽ファイルが見つかりませんでした")
         }
     }
+    
     //ドラムSTOP
     func stopDrum() {
         
@@ -133,28 +137,40 @@ class BingoViewController: UIViewController {
     
                 audioPlayer.play()
             
+                player = audioPlayer
+            
+            if count == -1 {
+                
+                var capturedPlayer = player
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-
-                audioPlayer.stop()
-
-                completion?()
+                    
+                    self.playSound(player: &capturedPlayer, path: path, count: -1, startTime: startTime, duration: duration, completion: completion)
+                }
+                
+            } else {
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                    
+                    audioPlayer.stop()
+                    
+                    completion?()
+                }
             }
-            
-            player = audioPlayer
-            
         } catch {
             
             print("再生中にエラーが発生しました！")
         }
     }
 
-    
     @IBAction func tapAction(_ sender: Any) {
         
         if !slideShowActive {
             
-            drumPlayer()
+            drumRollActive = true
             
+            drumPlayer()
+                        
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 
                 self.slideShowActive = true
@@ -169,11 +185,15 @@ class BingoViewController: UIViewController {
                 
                 randomGenerator()
                 
-                stopSlideShow()
-                
                 playSound(player: &musicPlayer, path: symbalPath, count: 1, startTime: 0, duration: 3.0)
                 
                 labelView.text = "\(randomValues.last ?? 0)"
+                
+                drumRollActive = false
+                
+                stopDrum()
+                
+                stopSlideShow()
             }
     }
     
