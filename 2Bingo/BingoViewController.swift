@@ -11,6 +11,9 @@ class BingoViewController: UIViewController {
     
     @IBOutlet weak var resetButton: UIButton!
     
+    //ドラムロール用のインスタンス
+    var drumPlay: AVAudioPlayer?
+    
     //音楽ファイル再生用のインスタンス
     var musicPlayer: AVAudioPlayer?
     
@@ -47,6 +50,8 @@ class BingoViewController: UIViewController {
     
     //stop
     func stopSlideShow() {
+        
+        stopDrum()
         
         musicPlayer = nil
         
@@ -86,6 +91,25 @@ class BingoViewController: UIViewController {
             
             labelView.text = "\(randomValue)"
         }
+    }
+    
+    //ドラム再生用
+    func drumPlayer() {
+        
+        if let drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3") {
+            
+            playSound(player: &drumPlay, path: drumPath, count: -1, startTime: 0.5, duration: 2.2)
+        } else {
+            
+            print("ドラムロールの音楽ファイルが見つかりませんでした")
+        }
+    }
+    //ドラムSTOP
+    func stopDrum() {
+        
+        drumPlay?.stop()
+        
+        drumPlay = nil
     }
     
     func playSound(player: inout AVAudioPlayer?, path: URL, count: Int, startTime: TimeInterval, duration: TimeInterval, completion: (() -> Void)? = nil) {
@@ -129,10 +153,7 @@ class BingoViewController: UIViewController {
         
         if !slideShowActive {
             
-            //ドラムの音
-            let drumPath = Bundle.main.url(forResource: "ドラムロール", withExtension: "mp3")!
-            
-            playSound(player: &musicPlayer, path: drumPath, count: -1, startTime: 0.0, duration: 2.0) //ドラムの音を1回再生する
+            drumPlayer()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 
