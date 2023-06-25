@@ -49,6 +49,12 @@ class BingoViewController: UIViewController {
         currentIndex = 0 // Reset the currentIndex
         
         updateSlide() // Display initial value
+        
+        if shouldGenerateValues && randomNumbers.isEmpty {
+                stopSlideShow() // 配列が空の場合にスライドショーを停止する
+            
+            labelView.text = "終了！"
+            }
     }
     
     //stop
@@ -75,12 +81,7 @@ class BingoViewController: UIViewController {
         
         if !shouldGenerateValues {
                 return
-            }
-        
-        if randomNumbers.isEmpty {
             
-            labelView.text = "終了！"
-                        
         } else {
             let randomIndex = Int.random(in: 0..<randomNumbers.count)
             
